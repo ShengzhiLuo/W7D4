@@ -1,0 +1,45 @@
+
+
+<div>
+    <ul>
+        <% @user.goals.each do |goal| %>
+            <li>
+                <p><%= goal.name %></p>
+                <p><%= goal.details %></p>
+                <% if goal.status %>
+                    <p>Done</p>
+                <% end %>
+                <form action = "<%= goal_url(goal)  %>" method = "POST">
+                    <input type = "hidden" name = "_method" value= "DELETE">
+                    <input type = "hidden"
+                            name = "authenticity_token"
+                            value = "<%= form_authenticity_token %>"/>
+                    <button>Delete Goal</button>
+                </form>
+            </li>
+        <% end %>
+    </ul>
+</div>
+
+
+<h1>Add a New Goal</h1>
+
+<form action = "<%= user_goals_url(@user) %>" method = "POST">
+    <label>Name
+        <input name = "goal[name]">
+    </label>
+    <label>Details
+        <input name = "goal[details]">
+    </label>
+
+    <label>Is this Complete?
+        <label>True
+            <input type = "radio" name = "goal[status]" value = "true">
+        </label>
+        <label>False
+            <input type = "radio" name = "goal[status]" value = "false">
+        </label>
+    </label>
+
+    <button>Create Goal</button>
+</form>
